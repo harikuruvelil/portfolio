@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="A PowerWorld study of how a simple transmission system responds as one generator pushes more and more power into it.">
+  <title>Power flow and voltage stability · Harigovind Kuruvelil</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/mark.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&display=swap">
+  <link rel="stylesheet" href="../styles.css?v=1">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="../main.js?v=1" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"><span></span></div>
+  <header class="nav solid"><div class="wrap nav-in"><a class="brand" href="../index.html" aria-label="Harigovind Kuruvelil, home"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><g stroke-width="2.6" stroke-linecap="round" fill="none"><path d="M9.5 4h5" stroke="#3159f5"/><path d="M18.84 7.15l1.54 4.76" stroke="#0aa5c0"/><path d="M18.73 17l-4.05 2.94" stroke="#c2349b"/><path d="M9.32 19.94L5.28 17" stroke="#e0a400"/><path d="M3.62 11.91l1.54-4.76" stroke="#3159f5"/></g></svg><span>Harigovind Kuruvelil</span></a><nav class="links" aria-label="Site"><a href="../index.html#work">Work</a><a href="../index.html#about">About</a><a href="../index.html#experience">Experience</a><a href="../index.html#contact">Contact</a></nav><a class="btn btn-dark btn-sm" href="../files/harigovind-kuruvelil-resume.pdf">Résumé</a></div></header>
+  <main id="main">
+    <div class="wrap">
+      <header class="p-head">
+        <a class="back" href="../index.html#work">← All work</a>
+        <p class="meta">Power systems lab (ECE 4464) · With a lab partner · 2025</p>
+        <h1>Power flow and voltage stability</h1>
+        <p class="p-lead">A PowerWorld study of how a simple transmission system responds as one generator pushes more and more power into it.</p>
+        <dl class="p-facts"><div><dt>When</dt><dd>2025</dd></div><div><dt>Team</dt><dd>With a lab partner</dd></div><div><dt>Course</dt><dd>ECE 4464, power systems</dd></div><div><dt>Tools</dt><dd>PowerWorld</dd></div></dl>
+      </header>
+      
+      <div class="p-body">
+        <nav class="toc" aria-label="On this page"><p>On this page</p><a href="#setup">Setup</a><a href="#results">Results</a><a href="#reducing-losses-and-supporting-voltage">Reducing losses and supporting voltage</a></nav>
+        <article class="prose">
+          <h2 id="setup">Setup</h2>
+          <p>The model has three buses: the generator on a 22&nbsp;kV bus (Bus 1), a 400&nbsp;kV mid-line bus (Bus 2), and a 400&nbsp;kV infinite bus (Bus 3) that holds 1.0&nbsp;p.u. at 0°. We raised the generator’s output from 100 to 700&nbsp;MW in 100&nbsp;MW steps, with its terminal voltage held at 1.0&nbsp;p.u., and recorded voltages, angles, reactive power, and losses at each step.</p>
+          <h2 id="results">Results</h2>
+          <figure class="chart"><svg viewBox="0 0 520 260" role="img" aria-label="Line chart of Bus 2 voltage falling from 1.026 per unit at 100 MW to 0.962 per unit at 700 MW, with the drop getting steeper above 400 MW."><g class="grid"><line x1="52" x2="464" y1="184.0" y2="184.0"/><line x1="52" x2="464" y1="136.0" y2="136.0"/><line x1="52" x2="464" y1="88.0" y2="88.0" stroke-dasharray="4 4"/><line x1="52" x2="464" y1="40.0" y2="40.0"/></g><g class="axis"><text x="44" y="188.3" text-anchor="end">0.96</text><text x="44" y="140.3" text-anchor="end">0.98</text><text x="44" y="92.3" text-anchor="end">1.00</text><text x="44" y="44.3" text-anchor="end">1.02</text><text x="52.0" y="229" text-anchor="middle">100</text><text x="120.7" y="229" text-anchor="middle">200</text><text x="189.3" y="229" text-anchor="middle">300</text><text x="258.0" y="229" text-anchor="middle">400</text><text x="326.7" y="229" text-anchor="middle">500</text><text x="395.3" y="229" text-anchor="middle">600</text><text x="464.0" y="229" text-anchor="middle">700</text><text x="258" y="254" text-anchor="middle">Generator output (MW)</text></g><path class="line" d="M52.0,25.0L120.7,28.6L189.3,39.5L258.0,58.4L326.7,86.4L395.3,125.6L464.0,179.5"/><g><title>100 MW: 1.026 p.u.</title><circle class="pt-hit" cx="52.0" cy="25.0" r="14"/><circle class="pt" cx="52.0" cy="25.0" r="4.5"/></g><g><title>200 MW: 1.025 p.u.</title><circle class="pt-hit" cx="120.7" cy="28.6" r="14"/><circle class="pt" cx="120.7" cy="28.6" r="4.5"/></g><g><title>300 MW: 1.020 p.u.</title><circle class="pt-hit" cx="189.3" cy="39.5" r="14"/><circle class="pt" cx="189.3" cy="39.5" r="4.5"/></g><g><title>400 MW: 1.012 p.u.</title><circle class="pt-hit" cx="258.0" cy="58.4" r="14"/><circle class="pt" cx="258.0" cy="58.4" r="4.5"/></g><g><title>500 MW: 1.001 p.u.</title><circle class="pt-hit" cx="326.7" cy="86.4" r="14"/><circle class="pt" cx="326.7" cy="86.4" r="4.5"/></g><g><title>600 MW: 0.984 p.u.</title><circle class="pt-hit" cx="395.3" cy="125.6" r="14"/><circle class="pt" cx="395.3" cy="125.6" r="4.5"/></g><g><title>700 MW: 0.962 p.u.</title><circle class="pt-hit" cx="464.0" cy="179.5" r="14"/><circle class="pt" cx="464.0" cy="179.5" r="4.5"/></g><text class="label" x="474.0" y="183.5">0.962</text><text class="label" x="52.0" y="15.0" text-anchor="middle">1.026</text></svg><figcaption>Bus 2 voltage (p.u.) at each generator output. The dashed line is 1.0&nbsp;p.u.</figcaption></figure>
+          <div class="table-wrap"><table>
+<caption>Bus results at each operating point</caption>
+<thead><tr><th scope="col">Generator output</th><th scope="col">Bus 2 voltage</th><th scope="col">Generator angle</th><th scope="col">Bus 2 angle</th><th scope="col">Generator Q</th><th scope="col">Losses</th></tr></thead>
+<tbody><tr><td>100 MW</td><td>1.026 p.u.</td><td>6.0°</td><td>3.2°</td><td>−50 Mvar</td><td>0.9 MW</td></tr><tr><td>200 MW</td><td>1.025 p.u.</td><td>12.2°</td><td>6.5°</td><td>−40 Mvar</td><td>2.7 MW</td></tr><tr><td>300 MW</td><td>1.020 p.u.</td><td>18.4°</td><td>10.0°</td><td>−18 Mvar</td><td>5.6 MW</td></tr><tr><td>400 MW</td><td>1.012 p.u.</td><td>24.9°</td><td>13.5°</td><td>15 Mvar</td><td>9.9 MW</td></tr><tr><td>500 MW</td><td>1.001 p.u.</td><td>31.7°</td><td>17.2°</td><td>62 Mvar</td><td>15.7 MW</td></tr><tr><td>600 MW</td><td>0.984 p.u.</td><td>38.9°</td><td>21.2°</td><td>125 Mvar</td><td>23.2 MW</td></tr><tr><td>700 MW</td><td>0.962 p.u.</td><td>46.9°</td><td>25.6°</td><td>208 Mvar</td><td>33.0 MW</td></tr></tbody>
+</table></div>
+<p class="table-note">Angles are relative to the infinite bus at 0°. Negative generator Q means the generator is absorbing reactive power. Losses are generator output minus the power delivered to the infinite bus.</p>
+          <p>Up to 300&nbsp;MW the generator is absorbing reactive power and the mid-line voltage sits above 1.0&nbsp;p.u. From there the voltage drops faster with each step: 1.012, 1.001, 0.984, then 0.962&nbsp;p.u. at 700&nbsp;MW. To hold its own terminal voltage, the generator goes from absorbing 50&nbsp;Mvar to supplying 208&nbsp;Mvar. Losses grow with the square of the current, from under 1&nbsp;MW to about 33&nbsp;MW.</p>
+          <p>The generator angle reached 46.9° at 700&nbsp;MW. The case still solved, so 700&nbsp;MW is not the stability limit, but the falling voltage and rising reactive demand show the system moving toward it.</p>
+          <h2 id="reducing-losses-and-supporting-voltage">Reducing losses and supporting voltage</h2>
+          <p>In the report we looked at ways to improve this: shunt capacitors or a STATCOM at the mid-line bus to supply reactive power locally, larger or bundled conductors to cut resistance and reactance, and a higher transmission voltage to reduce the current for the same power.</p>
+        </article>
+      </div>
+      <nav class="next" aria-label="Next project">
+        <a class="next-card" href="tof-tracking.html">
+          <div><p class="meta">Next project</p><span class="title">Time-of-flight ball tracking</span><span class="arrow">Read it</span></div>
+          <div class="img"><img src="../assets/show/tof.jpg" width="1200" height="900" alt="" loading="lazy"></div>
+        </a>
+      </nav>
+      <footer class="foot-row mini-footer"><p>© <span id="year">2026</span> Harigovind Kuruvelil</p><p class="foot-links"><a href="mailto:harigovind_31@yahoo.com">Email</a><a href="https://www.linkedin.com/in/harigovind-kuruvelil-943b292b0">LinkedIn</a><a href="https://github.com/harikuruvelil">GitHub</a><a href="../files/harigovind-kuruvelil-resume.pdf">Résumé</a></p></footer>
+    </div>
+  </main>
+</body>
+</html>

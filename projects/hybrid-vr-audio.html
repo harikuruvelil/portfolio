@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Sonoloom is the spatial audio system my capstone partner and I built for VR in Unreal Engine 5. It goes after two things that VR audio usually gets wrong: bass that drops out when a sound source goes behind a wall, and early reflections that sound unstable when the engine can only afford a few rays.">
+  <title>Hybrid VR spatial audio engine · Harigovind Kuruvelil</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/mark.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&display=swap">
+  <link rel="stylesheet" href="../styles.css?v=1">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="../main.js?v=1" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"><span></span></div>
+  <header class="nav solid"><div class="wrap nav-in"><a class="brand" href="../index.html" aria-label="Harigovind Kuruvelil, home"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><g stroke-width="2.6" stroke-linecap="round" fill="none"><path d="M9.5 4h5" stroke="#3159f5"/><path d="M18.84 7.15l1.54 4.76" stroke="#0aa5c0"/><path d="M18.73 17l-4.05 2.94" stroke="#c2349b"/><path d="M9.32 19.94L5.28 17" stroke="#e0a400"/><path d="M3.62 11.91l1.54-4.76" stroke="#3159f5"/></g></svg><span>Harigovind Kuruvelil</span></a><nav class="links" aria-label="Site"><a href="../index.html#work">Work</a><a href="../index.html#about">About</a><a href="../index.html#experience">Experience</a><a href="../index.html#contact">Contact</a></nav><a class="btn btn-dark btn-sm" href="../files/harigovind-kuruvelil-resume.pdf">Résumé</a></div></header>
+  <main id="main">
+    <div class="wrap">
+      <header class="p-head">
+        <a class="back" href="../index.html#work">← All work</a>
+        <p class="meta">Capstone project · Western University · Sept 2025 – Apr 2026 · Team of two</p>
+        <h1>Hybrid VR spatial audio engine</h1>
+        <p class="p-lead">Sonoloom is the spatial audio system my capstone partner and I built for VR in Unreal Engine 5. It goes after two things that VR audio usually gets wrong: bass that drops out when a sound source goes behind a wall, and early reflections that sound unstable when the engine can only afford a few rays.</p>
+        <dl class="p-facts"><div><dt>When</dt><dd>Sept 2025 – Apr 2026</dd></div><div><dt>Team</dt><dd>Two-person capstone</dd></div><div><dt>My part</dt><dd>Model training and evaluation, C++ runtime code, worker-thread inference, headset testing</dd></div><div><dt>Tools</dt><dd>C++, Unreal Engine 5.6, PyTorch, TensorRT, Meta Quest 3S</dd></div></dl>
+      </header>
+      <figure class="p-hero wide" data-reveal><img src="../assets/capstone-showcase.jpg" width="3304" height="2160" alt="The two team members standing beside the demo setup: a desk with monitors, studio speakers, a VR headset, and a PC" loading="lazy"><figcaption>The final demo setup at the capstone showcase, April 2026.</figcaption></figure>
+      <div class="p-body">
+        <nav class="toc" aria-label="On this page"><p>On this page</p><a href="#how-it-works">How it works</a><a href="#what-i-worked-on">What I worked on</a><a href="#sound-around-an-edge">Sound around an edge</a><a href="#swapping-responses-without-clicks">Swapping responses without clicks</a><a href="#picking-the-inference-backend">Picking the inference backend</a><a href="#results">Results</a></nav>
+        <article class="prose">
+          <h2 id="how-it-works">How it works</h2>
+          <p>The system has three layers. Meta XR Audio handles head-tracked binaural playback and late reverb. On top of that, an edge-diffraction layer keeps low frequencies audible around obstacles, and a neural model takes a cheap low-ray room impulse response and refines it toward what a high-ray simulation would give. The refined response goes into a two-lane convolution stage that crossfades between responses so updates don’t click.</p>
+          <p>Everything ran in Unreal Engine 5.6 on a Meta Quest 3S over Quest Link.</p>
+          <figure class="wide" data-reveal><video controls playsinline preload="none" width="960" height="540" poster="../assets/pre-final-demo-poster.jpg" aria-label="Walkthrough of the corridor test level in the pre-final build"><source src="../assets/pre-final-demo.mp4" type="video/mp4"></video><figcaption>Walkthrough of the corridor test level in the pre-final build, April 2026, with debug text on screen. The yellow line and markers in the middle of the clip are the line-of-sight debug view. Use headphones.</figcaption></figure>
+          <h2 id="what-i-worked-on">What I worked on</h2>
+          <p>On the model side, I worked on training and evaluating the causal 1D U-Net, which learned from 9,000 paired low-ray and high-ray impulse responses generated with pyroomacoustics.</p>
+          <p>In the engine, I built and debugged the C++ components that react to changing scene geometry and listener position. I moved model inference and the other heavy processing onto a worker thread so the real-time audio callback never waits on it. I also tested and debugged the system on the headset.</p>
+          <h2 id="sound-around-an-edge">Sound around an edge</h2>
+          <p>When a source is blocked, the diffraction layer traces toward it and measures how far the traced point lands from a designated edge (<i>d</i>), compared with a chosen falloff distance (<i>F</i>):</p>
+          <div class="math"><span class="eq">φ<sub>raw</sub> = clamp(1 − <i>d</i> / <i>F</i>, 0, 1)</span></div>
+          <p>φ is 1 right at the edge and 0 once the point is past the falloff distance. It drives a low-shelf filter, so the bass fades gradually as a source moves behind an obstacle instead of cutting out. The check runs 20 times a second. It is a geometric approximation rather than a wave simulation, but it is cheap and stable enough for real time.</p>
+          <figure class="wide diagram" data-reveal><a class="full" href="../assets/capstone-edge-geometry.png" title="Open full size"><img src="../assets/capstone-edge-geometry.png" width="2055" height="1356" alt="Annotated diagram of the trace rays, designated edge, and shadow-factor equation" loading="lazy"></a><figcaption>Trace geometry for the diffraction layer, with the falloff equation. Click to open full size.</figcaption></figure>
+          <figure class="wide diagram" data-reveal><a class="full" href="../assets/capstone-los-debug.jpg" title="Open full size"><img src="../assets/capstone-los-debug.jpg" width="2176" height="1003" alt="Side-by-side line-of-sight debug capture with red and green markers" loading="lazy"></a><figcaption>An early debug capture. Comparing the two sides showed the falloff was being applied in the wrong direction.</figcaption></figure>
+          <figure class="wide" data-reveal><video controls playsinline preload="none" width="960" height="540" poster="../assets/edge-diffraction-validation-poster.jpg" aria-label="Headset view of a hand moving around the edge of a wall in a blank test level"><source src="../assets/edge-diffraction-validation.mp4" type="video/mp4"></video><figcaption>Testing the diffraction layer in a blank level, seen from the headset. The cyan line is a debug marker on the wall edge. Development build.</figcaption></figure>
+          <h2 id="swapping-responses-without-clicks">Swapping responses without clicks</h2>
+          <p>Each new impulse response loads into whichever of the two convolution lanes is idle. The lanes then crossfade over 30–60&nbsp;ms using a half-cosine curve:</p>
+          <div class="math"><span class="eq">α(<i>x</i>) = (1 − cos π<i>x</i>) / 2</span><small><i>x</i> goes from 0 to 1 over the fade. The old lane’s gain is 1 − α and the new lane’s gain is α.</small></div>
+          <figure class="wide diagram" data-reveal><a class="full" href="../assets/capstone-submix.png" title="Open full size"><img src="../assets/capstone-submix.png" width="1011" height="490" alt="Unreal Engine submix graph routing main sound effects, late reverb, and early-field lanes to the master submix" loading="lazy"></a><figcaption>Submix routing in Unreal: main sound effects, late reverb, and the custom early-field lanes.</figcaption></figure>
+          <figure class="wide" data-reveal><video controls playsinline preload="none" width="960" height="540" poster="../assets/door-crossfade-demo-poster.jpg" aria-label="Door test level in the Unreal editor, with the door opening and closing"><source src="../assets/door-crossfade-demo.mp4" type="video/mp4"></video><figcaption>Door test level in the editor. The audio crossfades as the door changes state. Development build.</figcaption></figure>
+          <h2 id="picking-the-inference-backend">Picking the inference backend</h2>
+          <p>The original plan was to run the model on the CPU with ONNX Runtime. With the full 1.28M-parameter model that averaged 14.5&nbsp;ms per inference, far too slow, so we moved to TensorRT at FP16 on the GPU. An earlier design comparison showed a smaller model of about 400K parameters could meet a 3&nbsp;ms CPU target, but we wanted the larger model. The trade-off is that the runtime now needs an NVIDIA GPU and a compiled engine.</p>
+          <div class="table-wrap"><table>
+<caption>Final standalone benchmark, large model (1,280,642 parameters)</caption>
+<thead><tr><th scope="col">Backend</th><th scope="col">Mean</th><th scope="col">p99</th><th scope="col">Target</th></tr></thead>
+<tbody><tr><td>ONNX Runtime, CPU</td><td>14.533 ms</td><td>not recorded</td><td>—</td></tr><tr><td>TensorRT FP16, GPU</td><td>0.413 ms</td><td>0.52 ms</td><td>under 1 ms, met</td></tr></tbody>
+</table></div>
+<p class="table-note">500 runs after 20 warm-up runs on an RTX 5060 Ti (CUDA 12.8, TensorRT 10.15).</p>
+          <p>Those are standalone numbers. Inside Unreal, with the thread scheduler involved, inference averaged 3.1–4.6&nbsp;ms with occasional spikes up to about 15&nbsp;ms. That still fits, because the model only has to run 10–30 times a second.</p>
+          <h2 id="results">Results</h2>
+          <p>We tested the model on 1,000 held-out synthetic scenes. Its C50 error against the high-ray reference was 1.373&nbsp;dB, under the 2&nbsp;dB target, and it produced no measurable pre-echo.</p>
+          <div class="math"><span class="eq">C50 = 10 log<sub>10</sub>(<i>E</i><sub>0–50 ms</sub> / <i>E</i><sub>&gt;50 ms</sub>)</span><small>The ratio of sound energy in the first 50 ms to the energy after it.</small></div>
+          <p>Those results are on synthetic data. We didn’t get to a matched high-ray comparison inside Unreal, so they don’t prove the same accuracy in the engine.</p>
+          <figure class="wide" data-reveal><video controls playsinline preload="none" width="960" height="540" poster="../assets/convolution-comparison-poster.jpg" aria-label="Impulse responses played through convolution in an audio editor, with spectrum and waveform displays"><source src="../assets/convolution-comparison.mp4" type="video/mp4"></video><figcaption>Listening comparison of impulse responses through the convolution stage, with spectrum and waveform displays. Use headphones.</figcaption></figure>
+        </article>
+      </div>
+      <nav class="next" aria-label="Next project">
+        <a class="next-card" href="spot-welder-power-supply.html">
+          <div><p class="meta">Next project</p><span class="title">Spot welder power supply</span><span class="arrow">Read it</span></div>
+          <div class="img"><img src="../assets/show/spot-welder.jpg" width="1200" height="900" alt="" loading="lazy"></div>
+        </a>
+      </nav>
+      <footer class="foot-row mini-footer"><p>© <span id="year">2026</span> Harigovind Kuruvelil</p><p class="foot-links"><a href="mailto:harigovind_31@yahoo.com">Email</a><a href="https://www.linkedin.com/in/harigovind-kuruvelil-943b292b0">LinkedIn</a><a href="https://github.com/harikuruvelil">GitHub</a><a href="../files/harigovind-kuruvelil-resume.pdf">Résumé</a></p></footer>
+    </div>
+  </main>
+</body>
+</html>

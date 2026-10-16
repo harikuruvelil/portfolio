@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="A PWM-controlled, high-current supply for a spot welder, built around an Arduino, an IR2011 gate driver, and a high-side/low-side MOSFET pair.">
+  <title>Spot welder power supply · Harigovind Kuruvelil</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/mark.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&display=swap">
+  <link rel="stylesheet" href="../styles.css?v=1">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="../main.js?v=1" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"><span></span></div>
+  <header class="nav solid"><div class="wrap nav-in"><a class="brand" href="../index.html" aria-label="Harigovind Kuruvelil, home"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><g stroke-width="2.6" stroke-linecap="round" fill="none"><path d="M9.5 4h5" stroke="#3159f5"/><path d="M18.84 7.15l1.54 4.76" stroke="#0aa5c0"/><path d="M18.73 17l-4.05 2.94" stroke="#c2349b"/><path d="M9.32 19.94L5.28 17" stroke="#e0a400"/><path d="M3.62 11.91l1.54-4.76" stroke="#3159f5"/></g></svg><span>Harigovind Kuruvelil</span></a><nav class="links" aria-label="Site"><a href="../index.html#work">Work</a><a href="../index.html#about">About</a><a href="../index.html#experience">Experience</a><a href="../index.html#contact">Contact</a></nav><a class="btn btn-dark btn-sm" href="../files/harigovind-kuruvelil-resume.pdf">Résumé</a></div></header>
+  <main id="main">
+    <div class="wrap">
+      <header class="p-head">
+        <a class="back" href="../index.html#work">← All work</a>
+        <p class="meta">Power electronics course project · Team · Jan – May 2025</p>
+        <h1>Spot welder power supply</h1>
+        <p class="p-lead">A PWM-controlled, high-current supply for a spot welder, built around an Arduino, an IR2011 gate driver, and a high-side/low-side MOSFET pair.</p>
+        <dl class="p-facts"><div><dt>When</dt><dd>Jan – May 2025</dd></div><div><dt>Team</dt><dd>Course team project</dd></div><div><dt>My part</dt><dd>Bench debugging of the gate driver, bootstrap supply, and switching</dd></div><div><dt>Tools</dt><dd>Arduino, IR2011 gate driver, MOSFETs, op-amps, oscilloscope</dd></div></dl>
+      </header>
+      <figure class="p-hero wide diagram" data-reveal><a class="full" href="../assets/spot-welder-schematic.png" title="Open full size"><img src="../assets/spot-welder-schematic.png" width="1988" height="1261" alt="Circuit diagram with the Arduino, IR2011 gate driver, high-side and low-side MOSFETs, and op-amp sensing stages" loading="lazy"></a><figcaption>The circuit: Arduino control, gate driver, MOSFETs, and sensing. Click to open full size.</figcaption></figure>
+      <div class="p-body">
+        <nav class="toc" aria-label="On this page"><p>On this page</p><a href="#design">Design</a><a href="#debugging">Debugging</a><a href="#result">Result</a></nav>
+        <article class="prose">
+          <h2 id="design">Design</h2>
+          <p>The Arduino generates phase-correct PWM for the gate driver, which switches the high- and low-side MOSFETs. Potentiometers set the weld duration and current level. Op-amp stages condition the current and tip-voltage signals for the Arduino’s ADC, and the software shows readings on an LCD and logs them to an SD card.</p>
+          <p>The 100&nbsp;A figure was the design target. We did not measure it on the finished prototype.</p>
+          <h2 id="debugging">Debugging</h2>
+          <p>Most of my time on this project went into bench debugging with the oscilloscope and multimeter. The main problems we found and fixed:</p>
+          <ul><li>The high-side MOSFET wouldn’t turn on. Its supply wasn’t connected and a capacitor was missing its ground, so the bootstrap capacitor never charged. Rewiring the supply and grounding the capacitor fixed it.</li><li>The two MOSFETs were sometimes on at the same time. We added dead time in the PWM code, shortened the high-current paths, and cleaned up the soldering and wire lengths.</li><li>The low-side MOSFET was slow to turn off. Shorter leads and 1&nbsp;Ω gate resistors in place of the original 10&nbsp;Ω sped it up.</li><li>The PWM timing was wrong. We corrected it in the code and checked it again on the scope.</li></ul>
+          <figure class="wide" data-reveal><img src="../assets/spot-welder-waveform.jpg" width="2880" height="2160" alt="Oscilloscope screen showing two pulse trains, channel 1 in yellow and channel 2 in blue, at 20 microseconds per division" loading="lazy"><figcaption>An early capture of the two gate-driver outputs at 20&nbsp;µs per division. The pulses are about 100&nbsp;µs apart, half the intended PWM rate. This is the capture that showed us the timing was off.</figcaption></figure>
+          <h2 id="result">Result</h2>
+          <p>Bench tests confirmed that the control circuit drove the MOSFET switching stages as designed.</p>
+          <figure class="small" data-reveal><img src="../assets/spot-welder-lab.jpeg" width="429" height="437" alt="Laptop and oscilloscope on a lab bench during testing" loading="lazy"><figcaption>Bench testing.</figcaption></figure>
+        </article>
+      </div>
+      <nav class="next" aria-label="Next project">
+        <a class="next-card" href="bldc-motor.html">
+          <div><p class="meta">Next project</p><span class="title">Radial-flux BLDC motor</span><span class="arrow">Read it</span></div>
+          <div class="img"><img src="../assets/show/bldc-motor.jpg" width="1200" height="900" alt="" loading="lazy"></div>
+        </a>
+      </nav>
+      <footer class="foot-row mini-footer"><p>© <span id="year">2026</span> Harigovind Kuruvelil</p><p class="foot-links"><a href="mailto:harigovind_31@yahoo.com">Email</a><a href="https://www.linkedin.com/in/harigovind-kuruvelil-943b292b0">LinkedIn</a><a href="https://github.com/harikuruvelil">GitHub</a><a href="../files/harigovind-kuruvelil-resume.pdf">Résumé</a></p></footer>
+    </div>
+  </main>
+</body>
+</html>

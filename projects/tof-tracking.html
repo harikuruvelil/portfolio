@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Ball-height control on an Arduino Due running uC/OS-II. A time-of-flight sensor measures where the ball is, and a PID loop sets the fan speed to hold it at the requested height.">
+  <title>Time-of-flight ball tracking · Harigovind Kuruvelil</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/mark.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&display=swap">
+  <link rel="stylesheet" href="../styles.css?v=1">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="../main.js?v=1" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"><span></span></div>
+  <header class="nav solid"><div class="wrap nav-in"><a class="brand" href="../index.html" aria-label="Harigovind Kuruvelil, home"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><g stroke-width="2.6" stroke-linecap="round" fill="none"><path d="M9.5 4h5" stroke="#3159f5"/><path d="M18.84 7.15l1.54 4.76" stroke="#0aa5c0"/><path d="M18.73 17l-4.05 2.94" stroke="#c2349b"/><path d="M9.32 19.94L5.28 17" stroke="#e0a400"/><path d="M3.62 11.91l1.54-4.76" stroke="#3159f5"/></g></svg><span>Harigovind Kuruvelil</span></a><nav class="links" aria-label="Site"><a href="../index.html#work">Work</a><a href="../index.html#about">About</a><a href="../index.html#experience">Experience</a><a href="../index.html#contact">Contact</a></nav><a class="btn btn-dark btn-sm" href="../files/harigovind-kuruvelil-resume.pdf">Résumé</a></div></header>
+  <main id="main">
+    <div class="wrap">
+      <header class="p-head">
+        <a class="back" href="../index.html#work">← All work</a>
+        <p class="meta">Real-time embedded systems (ECE 4460) · 2026</p>
+        <h1>Time-of-flight ball tracking</h1>
+        <p class="p-lead">Ball-height control on an Arduino Due running uC/OS-II. A time-of-flight sensor measures where the ball is, and a PID loop sets the fan speed to hold it at the requested height.</p>
+        <dl class="p-facts"><div><dt>When</dt><dd>2026</dd></div><div><dt>Course</dt><dd>ECE 4460, real-time embedded systems</dd></div><div><dt>My part</dt><dd>Faster update rate, PID tuning, hardware debugging</dd></div><div><dt>Tools</dt><dd>Arduino Due, uC/OS-II, time-of-flight sensor, PWM fan</dd></div></dl>
+      </header>
+      <figure class="p-hero wide" data-reveal><img src="../assets/tof-controller-upright.jpg" width="1800" height="1350" alt="Controller board with a blue character LCD showing setpoint, distance, and duty cycle, and slide potentiometers below" loading="lazy"><figcaption>The controller during testing. The LCD shows the setpoint (Ref), the time-of-flight reading in millimetres, and the fan duty cycle. The sliders below are the height and PID controls.</figcaption></figure>
+      <div class="p-body">
+        <nav class="toc" aria-label="On this page"><p>On this page</p><a href="#structure">Structure</a><a href="#what-i-changed">What I changed</a></nav>
+        <article class="prose">
+          <h2 id="structure">Structure</h2>
+          <p>Each job runs as its own uC/OS-II task: reading the sensor, reading the setpoint, updating the display, and driving the fan. Tasks pass data through message queues, and semaphores protect the hardware they share.</p>
+          <h2 id="what-i-changed">What I changed</h2>
+          <p>I raised the sensing and control update rate from 5&nbsp;Hz to 20&nbsp;Hz, which gives the PID loop four times as many corrections per second, and tuned the gains so the ball responds better when the requested height changes.</p>
+          <p>Bringing the hardware up took some debugging too. Oscilloscope measurements and circuit checks helped me find wiring, pin-mapping, and PCB faults.</p>
+        </article>
+      </div>
+      <nav class="next" aria-label="Next project">
+        <a class="next-card" href="multi-sensor-monitoring.html">
+          <div><p class="meta">Next project</p><span class="title">Multi-sensor monitoring</span><span class="arrow">Read it</span></div>
+          <div class="img"><img src="../assets/show/home-monitor.jpg" width="960" height="720" alt="" loading="lazy"></div>
+        </a>
+      </nav>
+      <footer class="foot-row mini-footer"><p>© <span id="year">2026</span> Harigovind Kuruvelil</p><p class="foot-links"><a href="mailto:harigovind_31@yahoo.com">Email</a><a href="https://www.linkedin.com/in/harigovind-kuruvelil-943b292b0">LinkedIn</a><a href="https://github.com/harikuruvelil">GitHub</a><a href="../files/harigovind-kuruvelil-resume.pdf">Résumé</a></p></footer>
+    </div>
+  </main>
+</body>
+</html>

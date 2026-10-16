@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Two separate builds: an Arduino home monitor on a custom PCB, and a monitoring system on a Cyclone V SoC.">
+  <title>Multi-sensor monitoring · Harigovind Kuruvelil</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/mark.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&display=swap">
+  <link rel="stylesheet" href="../styles.css?v=1">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="../main.js?v=1" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"><span></span></div>
+  <header class="nav solid"><div class="wrap nav-in"><a class="brand" href="../index.html" aria-label="Harigovind Kuruvelil, home"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><g stroke-width="2.6" stroke-linecap="round" fill="none"><path d="M9.5 4h5" stroke="#3159f5"/><path d="M18.84 7.15l1.54 4.76" stroke="#0aa5c0"/><path d="M18.73 17l-4.05 2.94" stroke="#c2349b"/><path d="M9.32 19.94L5.28 17" stroke="#e0a400"/><path d="M3.62 11.91l1.54-4.76" stroke="#3159f5"/></g></svg><span>Harigovind Kuruvelil</span></a><nav class="links" aria-label="Site"><a href="../index.html#work">Work</a><a href="../index.html#about">About</a><a href="../index.html#experience">Experience</a><a href="../index.html#contact">Contact</a></nav><a class="btn btn-dark btn-sm" href="../files/harigovind-kuruvelil-resume.pdf">Résumé</a></div></header>
+  <main id="main">
+    <div class="wrap">
+      <header class="p-head">
+        <a class="back" href="../index.html#work">← All work</a>
+        <p class="meta">Two embedded systems course projects · 2024–2025</p>
+        <h1>Multi-sensor monitoring</h1>
+        <p class="p-lead">Two separate builds: an Arduino home monitor on a custom PCB, and a monitoring system on a Cyclone V SoC.</p>
+        <dl class="p-facts"><div><dt>When</dt><dd>2024–2025</dd></div><div><dt>Courses</dt><dd>ECE 2242 and ECE 3375</dd></div><div><dt>My part</dt><dd>PCB debugging: ground and pin-mapping repairs</dd></div><div><dt>Tools</dt><dd>Arduino Uno, EAGLE, Cyclone V SoC (ARM Cortex-A9)</dd></div></dl>
+      </header>
+      <figure class="p-hero wide" data-reveal><img src="../assets/home-monitor-pcb.jpg" width="1260" height="945" alt="Single-layer PCB after soldering, with red and black jumper wires across the board" loading="lazy"><figcaption>The home monitor PCB after soldering. The red and black jumper wires restore ground connections that were broken on the fabricated board.</figcaption></figure>
+      <div class="p-body">
+        <nav class="toc" aria-label="On this page"><p>On this page</p><a href="#arduino-home-monitor">Arduino home monitor</a><a href="#cyclone-v-monitor">Cyclone V monitor</a></nav>
+        <article class="prose">
+          <h2 id="arduino-home-monitor">Arduino home monitor</h2>
+          <p>An Arduino Uno shield on a single-layer PCB designed in EAGLE. It connected RFID access, temperature, humidity and gas sensors, a servo, a buzzer, and voice playback.</p>
+          <p>Two problems showed up once the board was fabricated. Parts of the ground plane were broken, so I bridged them with jumper wires. Some connectors were also routed to the wrong pins: the LCD was wired to A3 and A4, but the Uno’s I²C lines are A4 and A5. I rewired those connections by hand.</p>
+          <figure class="diagram" data-reveal><img src="../assets/home-monitor-board-layout.png" width="946" height="695" alt="EAGLE board layout with labelled connectors for the buzzer, RFID, PIR, servo, and SD card" loading="lazy"><figcaption>The board layout in EAGLE.</figcaption></figure>
+          <h2 id="cyclone-v-monitor">Cyclone V monitor</h2>
+          <p>A monitoring system on the Cyclone V SoC’s ARM Cortex-A9, using GPIO, timers, and interrupts, with a finite-state machine handling sensor events. The design called for a PIR sensor, an LCD, and a speaker. In the prototype we demonstrated, the board’s switches, buttons, LEDs, and seven-segment displays stood in for them.</p>
+          <p>Across the two builds I worked with SPI and I²C peripherals and with both interrupt-driven and polled I/O.</p>
+        </article>
+      </div>
+      <nav class="next" aria-label="Next project">
+        <a class="next-card" href="hybrid-vr-audio.html">
+          <div><p class="meta">Next project</p><span class="title">Hybrid VR spatial audio engine</span><span class="arrow">Read it</span></div>
+          <div class="img"><img src="../assets/thumbs/capstone.jpg" width="800" height="600" alt="" loading="lazy"></div>
+        </a>
+      </nav>
+      <footer class="foot-row mini-footer"><p>© <span id="year">2026</span> Harigovind Kuruvelil</p><p class="foot-links"><a href="mailto:harigovind_31@yahoo.com">Email</a><a href="https://www.linkedin.com/in/harigovind-kuruvelil-943b292b0">LinkedIn</a><a href="https://github.com/harikuruvelil">GitHub</a><a href="../files/harigovind-kuruvelil-resume.pdf">Résumé</a></p></footer>
+    </div>
+  </main>
+</body>
+</html>
