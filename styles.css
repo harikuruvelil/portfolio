@@ -230,7 +230,7 @@ sub, sup { line-height: 0; }
 /* Footer */
 
 .footer { padding: clamp(56px, 8vw, 96px) 0 36px; overflow: hidden; }
-.wordmark { display: flex; margin: 0 0 0 -0.04em; font-size: clamp(64px, 19.4vw, 298px); white-space: nowrap; font-weight: 480; letter-spacing: -0.05em; line-height: 1; padding: .08em 0; user-select: none; }
+.wordmark { display: flex; margin: 0 0 0 -0.04em; font-size: clamp(40px, 15.5vw, 222px); white-space: nowrap; font-weight: 480; letter-spacing: -0.05em; line-height: 1; padding: .08em 0; user-select: none; }
 .wordmark span { display: inline-block; animation: wave 6s ease-in-out infinite; animation-delay: calc(var(--i) * -0.45s); }
 @keyframes wave { 0%, 100% { transform: translateY(-0.055em); } 50% { transform: translateY(0.055em); } }
 .foot-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 24px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
